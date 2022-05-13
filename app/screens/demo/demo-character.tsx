@@ -1,5 +1,5 @@
 import React from "react"
-import { Image, TextStyle, View, ViewStyle, ImageStyle } from "react-native"
+import { Image, TextStyle, Pressable, ViewStyle, ImageStyle } from "react-native"
 import { Character } from "../../models/character/character"
 import { Text } from "../../components"
 
@@ -19,15 +19,16 @@ const LIST_TEXT: TextStyle = {
 
 interface Props {
   item: Character
+  onPress: (id: number) => void
 }
 
-export const DemoCharacter: React.FC<Props> = ({ item }) => {
+export const DemoCharacter: React.FC<Props> = ({ item, onPress }) => {
   return (
-    <View style={LIST_CONTAINER}>
+    <Pressable onPress={() => onPress(item.id)} style={LIST_CONTAINER}>
       <Image source={{ uri: item.image }} style={IMAGE} />
       <Text style={LIST_TEXT}>
         {item.name} ({item.status})
       </Text>
-    </View>
+    </Pressable>
   )
 }

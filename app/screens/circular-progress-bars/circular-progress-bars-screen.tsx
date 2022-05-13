@@ -4,6 +4,8 @@ import { TextStyle, View, ViewStyle } from "react-native"
 import { Header, Screen, Wallpaper } from "../../components"
 import { color, spacing } from "../../theme"
 import { useNavigation } from "@react-navigation/native"
+import { CircularProgressBarsReaniamted } from "./circular-progress-bars-reaniamted"
+import { CircularProgressBarsRN } from "./circular-progress-bars-rn"
 
 const FULL: ViewStyle = {
   flex: 1,
@@ -39,6 +41,8 @@ export const CircularProgressBarsScreen = observer(function CircularProgressBars
           style={HEADER}
           titleStyle={HEADER_TITLE}
         />
+        {/* <CircularProgressBarsReaniamted /> */}
+        <CircularProgressBarsRN />
       </Screen>
     </View>
   )

@@ -1,11 +1,16 @@
-import React from "react"
-import { View, Image, ViewStyle, TextStyle, ImageStyle } from "react-native"
+import React, { useRef } from "react"
+import { Animated as RNAnimated, View, ViewStyle, TextStyle } from "react-native"
 import { SafeAreaView } from "react-native-safe-area-context"
 import { useNavigation } from "@react-navigation/native"
 import { observer } from "mobx-react-lite"
-import { Button, Header, Screen, Text, Wallpaper } from "../../components"
+import { Button, Header, Screen, Wallpaper } from "../../components"
 import { color, spacing, typography } from "../../theme"
-const bowserLogo = require("./bowser.png")
+import Animated, {
+  useAnimatedStyle,
+  useSharedValue,
+  withDelay,
+  withTiming,
+} from "react-native-reanimated"
 
 const FULL: ViewStyle = { flex: 1 }
 const CONTAINER: ViewStyle = {
@@ -30,35 +35,6 @@ const HEADER_TITLE: TextStyle = {
   textAlign: "center",
   letterSpacing: 1.5,
 }
-const TITLE_WRAPPER: TextStyle = {
-  ...TEXT,
-  textAlign: "center",
-}
-const TITLE: TextStyle = {
-  ...TEXT,
-  ...BOLD,
-  fontSize: 28,
-  lineHeight: 38,
-  textAlign: "center",
-}
-const ALMOST: TextStyle = {
-  ...TEXT,
-  ...BOLD,
-  fontSize: 26,
-  fontStyle: "italic",
-}
-const BOWSER: ImageStyle = {
-  alignSelf: "center",
-  marginVertical: spacing[5],
-  maxWidth: "100%",
-}
-const CONTENT: TextStyle = {
-  ...TEXT,
-  color: "#BAB6C8",
-  fontSize: 15,
-  lineHeight: 22,
-  marginBottom: spacing[5],
-}
 const CONTINUE: ViewStyle = {
   paddingVertical: spacing[4],
   paddingHorizontal: spacing[4],
@@ -78,6 +54,11 @@ const FOOTER: ViewStyle = {
 const CONTINUE_EXTRA: ViewStyle = {
   marginBottom: spacing[3],
 }
+const BOX_STYLE: ViewStyle = {
+  height: 100,
+  width: 100,
+  backgroundColor: "red",
+}
 
 export const WelcomeScreen = observer(function WelcomeScreen() {
   const navigation = useNavigation()
@@ -85,26 +66,32 @@ export const WelcomeScreen = observer(function WelcomeScreen() {
   const circularProgressBarsScreen = () => navigation.navigate("circularProgressBars")
   const animatedLogosScreen = () => navigation.navigate("animatedLogos")
 
+  const x = useSharedValue(0)
+  const boxStyle = useAnimatedStyle(() => ({
+    transform: [{ translateX: withDelay(1000, withTiming(x.value, { duration: 1000 })) }],
+  }))
+
+  const rnX = new RNAnimated.Value(0)
+  const rnXValue = useRef(0)
   return (
     <View testID="WelcomeScreen" style={FULL}>
       <Wallpaper />
       <Screen style={CONTAINER} preset="scroll" backgroundColor={color.transparent}>
         <Header headerTx="welcomeScreen.poweredBy" style={HEADER} titleStyle={HEADER_TITLE} />
-        <Text style={TITLE_WRAPPER}>
-          <Text style={TITLE} text="Your new app, " />
-          <Text style={ALMOST} text="almost" />
-          <Text style={TITLE} text="!" />
-        </Text>
-        <Text style={TITLE} preset="header" tx="welcomeScreen.readyForLaunch" />
-        <Image source={bowserLogo} style={BOWSER} />
-        <Text style={CONTENT}>
-          This probably isn't what your app is going to look like. Unless your designer handed you
-          this screen and, in that case, congrats! You're ready to ship.
-        </Text>
-        <Text style={CONTENT}>
-          For everyone else, this is where you'll see a live preview of your fully functioning app
-          using Ignite.
-        </Text>
+        <Animated.View style={[BOX_STYLE, boxStyle]} />
+        <Button text="Reanimated Increment" onPress={() => (x.value += 10)} />
+        <RNAnimated.View style={[BOX_STYLE, { transform: [{ translateX: rnX }] }]} />
+        <Button
+          text="RN Increment"
+          onPress={() => {
+            rnXValue.current += 10
+            RNAnimated.timing(rnX, {
+              toValue: rnXValue.current,
+              duration: 1000,
+              useNativeDriver: true,
+            }).start()
+          }}
+        />
       </Screen>
       <SafeAreaView style={FOOTER}>
         <Button

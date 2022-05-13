@@ -4,6 +4,8 @@ import { TextStyle, View, ViewStyle } from "react-native"
 import { Header, Screen, Wallpaper } from "../../components"
 import { color, spacing } from "../../theme"
 import { useNavigation } from "@react-navigation/native"
+import { AnimatedLogosReanimated } from "./animated-logos-reanimated"
+import { AnimatedLogosRN } from "./animated-logos-rn"
 
 const FULL: ViewStyle = {
   flex: 1,
@@ -39,6 +41,8 @@ export const AnimatedLogosScreen = observer(function AnimatedLogosScreen() {
           style={HEADER}
           titleStyle={HEADER_TITLE}
         />
+        {/* <AnimatedLogosReanimated /> */}
+        <AnimatedLogosRN />
       </Screen>
     </View>
   )
