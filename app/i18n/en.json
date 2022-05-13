@@ -10,7 +10,10 @@
   "welcomeScreen": {
     "poweredBy": "POWERED BY IGNITE",
     "readyForLaunch": "Ready for launch.",
-    "continue": "CONTINUE"
+    "continue": "CONTINUE",
+    "animatedLists": "Animated Lists",
+    "animatedLogos": "Animated Logos", 
+    "circularProgressBars": "Circular Progress Bars"
   },
   "demoScreen": {
     "howTo": "HOW TO",
@@ -25,10 +28,16 @@
     "windowsReactotronHint": "If this doesn't work, ensure the Reactotron desktop app is running and reload app."
   },
   "demoListScreen": {
-    "title": "Demo List"
+    "title": "Animated List"
   },
   "storybook": {
     "placeholder": "Placeholder",
     "field": "Field"
+  },
+  "animatedLogosScreen": {
+    "title": "Animated Logos"
+  },
+  "circularProgressBarsScreen": {
+    "title": "Circular Progress Bars"
   }
 }

@@ -1,5 +1,6 @@
 import React from "react"
-import { View, Image, ViewStyle, TextStyle, ImageStyle, SafeAreaView } from "react-native"
+import { View, Image, ViewStyle, TextStyle, ImageStyle } from "react-native"
+import { SafeAreaView } from "react-native-safe-area-context"
 import { useNavigation } from "@react-navigation/native"
 import { observer } from "mobx-react-lite"
 import { Button, Header, Screen, Text, Wallpaper } from "../../components"
@@ -69,15 +70,20 @@ const CONTINUE_TEXT: TextStyle = {
   fontSize: 13,
   letterSpacing: 2,
 }
-const FOOTER: ViewStyle = { backgroundColor: "#20162D", marginBottom: 64 }
-const FOOTER_CONTENT: ViewStyle = {
+const FOOTER: ViewStyle = {
+  backgroundColor: "#20162D",
   paddingVertical: spacing[4],
   paddingHorizontal: spacing[4],
+}
+const CONTINUE_EXTRA: ViewStyle = {
+  marginBottom: spacing[3],
 }
 
 export const WelcomeScreen = observer(function WelcomeScreen() {
   const navigation = useNavigation()
-  const nextScreen = () => navigation.navigate("demo")
+  const animatedListsScreen = () => navigation.navigate("demoList")
+  const circularProgressBarsScreen = () => navigation.navigate("circularProgressBars")
+  const animatedLogosScreen = () => navigation.navigate("animatedLogos")
 
   return (
     <View testID="WelcomeScreen" style={FULL}>
@@ -101,15 +107,27 @@ export const WelcomeScreen = observer(function WelcomeScreen() {
         </Text>
       </Screen>
       <SafeAreaView style={FOOTER}>
-        <View style={FOOTER_CONTENT}>
-          <Button
-            testID="next-screen-button"
-            style={CONTINUE}
-            textStyle={CONTINUE_TEXT}
-            tx="welcomeScreen.continue"
-            onPress={nextScreen}
-          />
-        </View>
+        <Button
+          testID="next-screen-button"
+          style={[CONTINUE, CONTINUE_EXTRA]}
+          textStyle={CONTINUE_TEXT}
+          tx="welcomeScreen.animatedLists"
+          onPress={animatedListsScreen}
+        />
+        <Button
+          testID="next-screen-button"
+          style={[CONTINUE, CONTINUE_EXTRA]}
+          textStyle={CONTINUE_TEXT}
+          tx="welcomeScreen.circularProgressBars"
+          onPress={circularProgressBarsScreen}
+        />
+        <Button
+          testID="next-screen-button"
+          style={CONTINUE}
+          textStyle={CONTINUE_TEXT}
+          tx="welcomeScreen.animatedLogos"
+          onPress={animatedLogosScreen}
+        />
       </SafeAreaView>
     </View>
   )

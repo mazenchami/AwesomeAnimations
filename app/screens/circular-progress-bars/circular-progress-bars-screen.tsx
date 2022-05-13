@@ -1,11 +1,9 @@
 import React from "react"
-import { FlatList, TextStyle, View, ViewStyle } from "react-native"
-import { useNavigation } from "@react-navigation/native"
 import { observer } from "mobx-react-lite"
+import { TextStyle, View, ViewStyle } from "react-native"
 import { Header, Screen, Wallpaper } from "../../components"
 import { color, spacing } from "../../theme"
-import { useCharacterHelpers } from "./useCharacterHelpers"
-import { DemoCharacter } from "./demo-character"
+import { useNavigation } from "@react-navigation/native"
 
 const FULL: ViewStyle = {
   flex: 1,
@@ -25,32 +23,21 @@ const HEADER_TITLE: TextStyle = {
   lineHeight: 15,
   textAlign: "center",
 }
-const FLAT_LIST: ViewStyle = {
-  paddingHorizontal: spacing[4],
-}
 
-export const DemoListScreen = observer(function DemoListScreen() {
+export const CircularProgressBarsScreen = observer(function CircularProgressBarsScreen() {
   const navigation = useNavigation()
   const goBack = () => navigation.goBack()
 
-  const { characters } = useCharacterHelpers()
-
   return (
-    <View testID="DemoListScreen" style={FULL}>
+    <View testID="CircularProgressBarsScreen" style={FULL}>
       <Wallpaper />
       <Screen style={CONTAINER} preset="fixed" backgroundColor={color.transparent}>
         <Header
-          headerTx="demoListScreen.title"
+          headerTx="circularProgressBarsScreen.title"
           leftIcon="back"
           onLeftPress={goBack}
           style={HEADER}
           titleStyle={HEADER_TITLE}
-        />
-        <FlatList
-          contentContainerStyle={FLAT_LIST}
-          data={[...characters]}
-          keyExtractor={(item) => String(item.id)}
-          renderItem={({ item }) => <DemoCharacter item={item} />}
         />
       </Screen>
     </View>
